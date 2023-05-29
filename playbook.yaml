@@ -10,4 +10,22 @@
     user:
       name: alex
       state: present
+  - name: create finger module on all hosts
+  hosts: all
+  tasks:
+    - name: "remove unwanted kubernetes apt source"
+      file:
+        name: /etc/apt/sources.list.d/kubernetes.list
+        state: absent
+    - name: install maven
+      apt:
+        name: maven
+        state: present
+        update_cache: yes
+      notify: debug message Hello World
+  handlers:
+    - name: debug message Hello World
+      debug:
+        msg: Hello World
+
       
